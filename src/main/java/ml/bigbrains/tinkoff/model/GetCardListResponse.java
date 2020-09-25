@@ -1,4 +1,4 @@
-package ml.bigbrains.tinkoff.tinkoffe3capiclient.model;
+package ml.bigbrains.tinkoff.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -7,14 +7,19 @@ import lombok.Data;
 public class GetCardListResponse {
     @JsonProperty("Pan")
     private String pan;
+
     @JsonProperty("CardId")
     private String cardId;
+
     @JsonProperty("Status")
     private String status;
-    @JsonProperty("Rebilld")
-    private Long rebilld;
+
+    @JsonProperty("RebillId")
+    private Long rebillId;
+
     @JsonProperty("CardType")
     private Integer cardType;
+
     @JsonProperty("ExpDate")
     private String expDate;
 }
