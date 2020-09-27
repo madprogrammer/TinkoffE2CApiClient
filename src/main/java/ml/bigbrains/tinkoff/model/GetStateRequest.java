@@ -40,6 +40,6 @@ public class GetStateRequest extends SignedRequest {
 
     @Override
     public String getUri() {
-        return "/GetState";
+        return "/e2c/GetState";
     }
 }

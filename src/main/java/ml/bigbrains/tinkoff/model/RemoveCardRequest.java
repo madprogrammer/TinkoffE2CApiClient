@@ -34,6 +34,6 @@ public class RemoveCardRequest extends SignedCustomerKeyRequest {
 
     @Override
     public String getUri() {
-        return "/RemoveCard";
+        return "/e2c/RemoveCard";
     }
 }

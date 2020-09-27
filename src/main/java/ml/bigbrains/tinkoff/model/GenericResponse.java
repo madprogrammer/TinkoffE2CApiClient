@@ -35,4 +35,6 @@ public class GenericResponse {
     @JsonProperty("Details")
     private String details;
 
+    @JsonProperty("RequestKey")
+    private String requestKey;
 }

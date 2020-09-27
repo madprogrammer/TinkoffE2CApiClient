@@ -45,6 +45,6 @@ public class AddCardRequest extends SignedCustomerKeyRequest {
 
     @Override
     public String getUri() {
-        return "/AddCard";
+        return "/e2c/AddCard";
     }
 }

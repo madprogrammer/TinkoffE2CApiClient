@@ -15,6 +15,6 @@ public class GetCustomerRequest extends SignedCustomerKeyRequest {
 
     @Override
     public String getUri() {
-        return "/GetCustomer";
+        return "/e2c/GetCustomer";
     }
 }

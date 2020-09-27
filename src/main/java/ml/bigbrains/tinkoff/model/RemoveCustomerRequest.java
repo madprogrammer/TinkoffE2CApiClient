@@ -15,7 +15,7 @@ public class RemoveCustomerRequest extends SignedCustomerKeyRequest {
 
     @Override
     public String getUri() {
-        return "/RemoveCustomer";
+        return "/e2c/RemoveCustomer";
     }
 
 }

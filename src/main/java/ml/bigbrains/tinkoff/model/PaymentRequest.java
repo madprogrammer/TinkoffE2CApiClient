@@ -36,6 +36,6 @@ public class PaymentRequest extends SignedRequest {
 
     @Override
     public String getUri() {
-        return "/Payment";
+        return "/e2c/Payment";
     }
 }

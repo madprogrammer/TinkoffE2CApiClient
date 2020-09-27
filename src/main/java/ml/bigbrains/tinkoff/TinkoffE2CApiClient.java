@@ -7,23 +7,23 @@ import java.io.IOException;
 
 public class TinkoffE2CApiClient {
 
-    private static String TEST_API_BASE = "https://rest-api-test.tinkoff.ru/e2c";
-    private static String PROD_API_BASE = "https://securepay.tinkoff.ru/e2c";
+    private static String TEST_API_BASE = "https://rest-api-test.tinkoff.ru";
+    private static String PROD_API_BASE = "https://securepay.tinkoff.ru";
 
     private final boolean testMode;
 
     private final OkHttpClient httpClient;
 
-    public TinkoffE2CApiClient(HttpClientBuilder httpClientBuilder, boolean testMode) {
+    public TinkoffE2CApiClient(OkHttpClient httpClient, boolean testMode) {
         this.testMode = testMode;
-        this.httpClient = httpClientBuilder.build();
+        this.httpClient = httpClient;
     }
 
-    public TinkoffE2CApiClient(HttpClientBuilder httpClientBuilder) {
-        this(httpClientBuilder, false);
+    public TinkoffE2CApiClient(OkHttpClient httpClient) {
+        this(httpClient, false);
     }
 
-    private String getBaseUri() {
+    public String getBaseUri() {
         if (this.testMode)
             return TEST_API_BASE;
         else

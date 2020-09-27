@@ -75,6 +75,6 @@ public class InitRequest extends SignedRequest {
 
     @Override
     public String getUri() {
-        return "/Init";
+        return "/e2c/Init";
     }
 }
