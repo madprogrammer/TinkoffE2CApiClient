@@ -18,6 +18,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import ml.bigbrains.tinkoff.CryptoHelper;
 import ml.bigbrains.tinkoff.CryptographicException;
 import org.apache.commons.lang3.StringUtils;
 import ru.CryptoPro.JCP.JCP;
@@ -57,32 +58,13 @@ public abstract class SignedRequest {
     public void sign(String keyStoreInstanceName, String keyName, String keyPassword, String x509Serial)
             throws CryptographicException
     {
-        try {
-            Security.addProvider(new JCP());
+        CryptoHelper cryptoHelper = new CryptoHelper();
+        String data = cryptoHelper.getCryptoMapi().concatValues(this.getMapForSignature());
+        cryptoHelper.sign(data, keyStoreInstanceName, keyName, keyPassword);
 
-            CryptoMapi crypto = new CryptoMapi();
-            String data = crypto.concatValues(this.getMapForSignature());
-
-            byte[] digestData = crypto.calcDigest(JCP.GOST_DIGEST_2012_256_NAME, data.getBytes(StandardCharsets.UTF_8));
-
-            KeyStore store = KeyStore.getInstance(keyStoreInstanceName);
-            store.load(null, null);
-
-            Key privateKey = store.getKey(keyName, keyPassword == null ? null : keyPassword.toCharArray());
-            String signatureAlgorithm = JCP.GOST_SIGN_2012_256_NAME;
-
-            log.debug("Private key algorithm: " + privateKey.getAlgorithm());
-            if (privateKey.getAlgorithm().equals(JCP.GOST_DH_2012_512_NAME))
-                signatureAlgorithm = JCP.GOST_SIGN_2012_512_NAME;
-
-            byte[] signature = crypto.calcSignature(signatureAlgorithm, (PrivateKey) privateKey, digestData);
-
-            this.digestValue = Base64.getEncoder().encodeToString(digestData);
-            this.signatureValue = Base64.getEncoder().encodeToString(signature);
-            this.x509SerialNumber = x509Serial;
-        } catch (Exception exc) {
-            throw new CryptographicException(exc);
-        }
+        this.signatureValue = cryptoHelper.getSignatureValue();
+        this.digestValue = cryptoHelper.getDigestValue();
+        this.x509SerialNumber = x509Serial;
     }
 
     @JsonIgnore
